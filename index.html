@@ -91,7 +91,7 @@
             cells[b].textContent === currentPlayer &&
             cells[c].textContent === currentPlayer
           ) {
-            message.textContent = `Player ${currentPlayer.toUpperCase()} wins!`;
+            message.textContent = `O jogador ${currentPlayer.toUpperCase()} venceu!`;
             gameEnded = true;
             break;
           }
@@ -101,7 +101,7 @@
           !gameEnded &&
           Array.from(cells).every((cell) => cell.textContent !== '')
         ) {
-          message.textContent = "It's a tie!";
+          message.textContent = 'Empate!';
           gameEnded = true;
         }
       }
