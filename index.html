@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Jogo da Velha</title>
+    <style>
+      .board {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        gap: 10px;
+        width: 300px;
+        height: 300px;
+        margin: 0 auto;
+      }
+
+      .cell {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 48px;
+        background-color: #f2f2f2;
+        cursor: pointer;
+      }
+
+      .cell:hover {
+        background-color: #e6e6e6;
+      }
+
+      .cell.x {
+        color: #ff0000;
+      }
+
+      .cell.o {
+        color: #0000ff;
+      }
+
+      .message {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 24px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="board">
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+    <div class="message"></div>
+
+    <script>
+      const cells = document.querySelectorAll('.cell');
+      const message = document.querySelector('.message');
+      let currentPlayer = 'x';
+      let gameEnded = false;
+
+      cells.forEach((cell) => {
+        cell.addEventListener('click', () => {
+          if (cell.textContent === '' && !gameEnded) {
+            cell.textContent = currentPlayer;
+            cell.classList.add(currentPlayer);
+            checkWinner();
+            currentPlayer = currentPlayer === 'x' ? 'o' : 'x';
+          }
+        });
+      });
+
+      function checkWinner() {
+        const winningCombinations = [
+          [0, 1, 2],
+          [3, 4, 5],
+          [6, 7, 8],
+          [0, 3, 6],
+          [1, 4, 7],
+          [2, 5, 8],
+          [0, 4, 8],
+          [2, 4, 6],
+        ];
+
+        for (let i = 0; i < winningCombinations.length; i++) {
+          const [a, b, c] = winningCombinations[i];
+          if (
+            cells[a].textContent === currentPlayer &&
+            cells[b].textContent === currentPlayer &&
+            cells[c].textContent === currentPlayer
+          ) {
+            message.textContent = `Player ${currentPlayer.toUpperCase()} wins!`;
+            gameEnded = true;
+            break;
+          }
+        }
+
+        if (
+          !gameEnded &&
+          Array.from(cells).every((cell) => cell.textContent !== '')
+        ) {
+          message.textContent = "It's a tie!";
+          gameEnded = true;
+        }
+      }
+    </script>
+  </body>
+</html>
